@@ -1,6 +1,9 @@
 /* Proyección a distancia: mayor cuerpo y diagramas que aprovechan el espacio. */
 .slide-inner h2{font-size:48px;line-height:1.08}
 .slide-body{font-size:26px;line-height:1.4}
+.slide-shell:first-child .slide-inner{align-items:center}
+.slide-shell:first-child h2{width:100%;text-align:center;font-size:clamp(56px,7vw,88px);margin:18px 0 0}
+.slide-shell:first-child .slide-body{width:100%}
 .slide-body h3{font-size:29px}
 .muted{font-size:22px}
 table{font-size:23px;line-height:1.35}
@@ -54,9 +57,9 @@ pre{font-size:22px;line-height:1.48;max-height:430px}
 .wal-flow{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .wal-flow span{flex:1;padding:10px 8px;text-align:center;background:#e8f1f6;border:1px solid #c2d3de;font-weight:800;font-size:17px;color:#174e73}
 .wal-flow i{font-style:normal;color:var(--cyan);font-size:26px;font-weight:800}
-.property-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--rule);padding-top:12px}
-.property-notes div{padding:8px 12px;border-left:3px solid var(--cyan);font-size:16px;line-height:1.35;color:#40596b}
-.property-notes b{display:block;color:var(--pg);font-size:16px;margin-bottom:3px}
+.property-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-top:1px solid var(--rule);padding-top:16px}
+.property-notes div{padding:12px 16px;border-left:4px solid var(--cyan);font-size:23px;line-height:1.35;color:#40596b}
+.property-notes b{display:block;color:var(--pg);font-size:28px;margin-bottom:6px}
 
 .psql-console{display:grid;grid-template-columns:1fr 1.1fr;gap:22px;align-items:stretch;margin:10px 0 14px}
 .psql-window{background:#12202b;color:#dff5fc;border-top:5px solid var(--cyan);padding:18px 22px;display:flex;flex-direction:column;justify-content:center;min-height:360px}
@@ -87,6 +90,11 @@ pre{font-size:22px;line-height:1.48;max-height:430px}
   .property-map div{border-bottom:1px solid var(--rule)}
   .psql-map{grid-template-columns:1fr;gap:8px}
   .psql-map i{transform:rotate(90deg);text-align:center}
+  .architecture{grid-template-columns:1fr;grid-template-rows:auto;max-width:760px}
+  .arch-client,.arch-server,.arch-children{grid-column:1}
+  .arch-children{flex-wrap:wrap}
+  .arch-shared,.arch-disk,.arch-vac{grid-column:1}
+  .architecture-note{font-size:17px}
 }
 @media(max-width:680px){
   .slide-inner h2{font-size:32px}
@@ -107,4 +115,9 @@ pre{font-size:22px;line-height:1.48;max-height:430px}
   .psql-command-list code,.psql-command-list span{font-size:15px}
   .query-flow{grid-template-columns:1fr;gap:6px}
   .query-flow i{text-align:center;transform:rotate(90deg)}
+  .cover-logo{min-height:320px}
+  .cover-logo img{width:min(330px,75vw)}
+  .slide-shell:first-child h2{font-size:56px}
+  .property-notes div{font-size:18px}
+  .property-notes b{font-size:23px}
 }
