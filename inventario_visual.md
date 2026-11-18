@@ -14,7 +14,10 @@
 | Comandos psql | 2 | 6 | Tabla de referencia |
 | Esquema departamentos / empleados | 2–3 | 7 | Diagrama de entidades; DDL íntegro desplegable |
 | Filas INSERT y casos de ausencia de pareja | 3 | 8 | Resumen visual y código INSERT íntegro desplegable |
-| Operadores de comparación | 4 | 13 | Tabla breve |
+| Comportamientos PostgreSQL frente a Oracle: DUAL, división y concatenación | 3-5 | 9-13 | Comparaciones de sintaxis y resultados con expresiones del PDF |
+| Operadores de comparación, BETWEEN, IN, LIKE e ILIKE | 4-5 | 14 | Pestañas por familia de predicados y patrones |
+| NULL, lógica de tres valores y precedencia AND/OR | 3-5 | 15-16 | Reglas visuales y consultas con `empleados` |
+| Preguntas de aplicación sobre semántica PostgreSQL | 3-5 | 17 | Respuestas desplegables para participación oral |
 | Funciones numéricas | 6 | 18 | Tabla por grupo y salida citada |
 | Funciones de cadenas | 6–7 | 19 | Tabla por propósito; POSITION, STRPOS y SOUNDEX interactivos |
 | Agregados COUNT, SUM, AVG, MAX, MIN | 8 | 20 | Tabla y consulta resumen |
@@ -33,14 +36,19 @@
 
 | Diapositiva | Elemento | Qué representa | Base en el PDF |
 |---:|---|---|---|
-| 4 | Carril ACID / MVCC / WAL | Tres propiedades destacadas del motor | p. 1 |
+| 4 | Panel ACID / MVCC / WAL | Transacciones, concurrencia y recuperación | p. 1 |
 | 5 | Flujo de arquitectura | Clientes, postmaster, procesos hijo, shared buffers, WAL y autovacuum | p. 2 |
 | 7 | Diagrama de entidades | departamentos y empleados, claves foráneas y relación jefe-empleado | pp. 2–3 |
-| 12 | Secuencia lógica | FROM → WHERE → SELECT | p. 3 |
+| 9 | Mapa de portabilidad | Sintaxis SQL compartida y comportamientos que dependen del motor | pp. 3-5 |
+| 10 | Comparación DUAL / sin FROM | Consultar una expresión en Oracle y PostgreSQL | p. 5 |
+| 11 | Comparación de división | Tipo de los operandos y uso de NUMERIC en PostgreSQL | pp. 3-4 |
+| 13 | Comparación de concatenación | `||`, `CONCAT` y su tratamiento de NULL | p. 4 |
+| 15 | Lógica de tres valores | TRUE, FALSE, UNKNOWN y pruebas con NULL | pp. 4-5 |
+| 16 | Secuencia de precedencia | Cómo AND antes de OR cambia la interpretación del filtro | p. 5 |
+| 17 | Reto de portabilidad | Preguntas orales con respuestas desplegables sobre ejemplos previos | pp. 3-5 |
 | 27 | Diagrama de conjuntos interactivo | INNER, LEFT, RIGHT, FULL y el producto CROSS | p. 13 |
 | 30 | Secuencia de agrupación | FROM, WHERE, GROUP BY, HAVING y SELECT | p. 14 |
 | 54 | Secuencia OPEN → FETCH → CLOSE | Ciclo manual del cursor y estado FOUND | pp. 25–26 |
-| 4 | Panel tipográfico de rasgos | Extensibilidad, familias de datos, lenguajes procedurales y origen comunitario | p. 1 |
 | 6 | Recorrido de uso de psql | Conectar, explorar objetos y ejecutar comandos de navegación | p. 2 |
 
 ## Interacciones
@@ -50,6 +58,7 @@
 - **JOIN:** ilumina el tipo seleccionado y describe conteos y filas exclusivas del esquema del PDF.
 - **Cursor:** avanza por declaración, OPEN, FETCH y CLOSE.
 - **Preguntas:** cada respuesta se despliega por separado.
+- **Reto de portabilidad:** las respuestas de la diapositiva 17 se abren una por una después de que el público intenta resolverlas.
 - **Navegación Reveal.js:** flechas, controles, progreso, modo visión general y pantalla completa.
 
 ## Recursos en `assets/`

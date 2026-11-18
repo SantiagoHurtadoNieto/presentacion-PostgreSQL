@@ -11,7 +11,7 @@ El tiempo incluye transiciones, pausas breves de participación y análisis oral
 | 1–2 | Apertura y propósito | 3 min |
 | 3–6 | PostgreSQL, SQL y arquitectura | 7 min |
 | 7–8 | Esquema y filas de ejemplo | 3 min |
-| 9–17 | Consultas, operadores y NULL | 14 min |
+| 9-17 | Portabilidad Oracle–PostgreSQL y semántica de consultas | 15 min |
 | 18–21 | Funciones simples y agregación | 10 min |
 | 22–23 | Fechas | 6 min |
 | 24–25 | Conversión y máscaras | 5 min |
@@ -21,7 +21,8 @@ El tiempo incluye transiciones, pausas breves de participación y análisis oral
 | 50–52 | Excepciones | 8 min |
 | 53–55 | Cursores | 7 min |
 | 56–59 | Funciones almacenadas | 9 min |
-| 60–62 | Funciones/procedimientos, equivalencias y sustentación | 11 min |
+| 60-61 | Funciones/procedimientos y mapa final de equivalencias | 2 min |
+| 62 | Preguntas y discusión | 8 min |
 |  | **Total** | **120 min** |
 
 ## Guion por diapositiva
@@ -31,21 +32,21 @@ El tiempo incluye transiciones, pausas breves de participación y análisis oral
 | 1 | 1 min | Presenta la pregunta central: cómo pasamos de consultar filas a guardar lógica en la base. Explica que se mantendrá el mismo modelo de departamentos y empleados. |
 | 2 | 2 min | Explica el recorrido, marca que JOIN, subconsultas, PL/pgSQL y cursores necesitan más conversación que una definición. Informa que usará las pestañas y el índice de navegación. |
 | 3 | 2 min | Define el SGBD como el software que define, almacena, consulta y protege datos. Pide al público asociar integridad, concurrencia y recuperación con necesidades concretas. |
-| 4 | 2 min | Compara DQL, DML, DDL, DCL y TCL usando las sentencias de la tabla. Señala que cada sublenguaje describe una tarea distinta. |
-| 5 | 2 min | Explica ACID, MVCC y WAL con las frases de la fuente. Distingue control de concurrencia de recuperación ante fallos. |
-| 6 | 1 min | Recorre conexiones, proceso hijo, memoria compartida, WAL y autovacuum de izquierda a derecha. Presenta el diagrama como arquitectura básica del documento, no como un inventario de procesos. |
-| 7 | 1 min | Demuestra mentalmente la secuencia de psql: conectarse, listar base, cambiar, listar tablas, describir y salir. Aclara que pgAdmin es la alternativa gráfica mencionada. |
-| 8 | 2 min | Lee las dos tablas como una relación y como una autorreferencia. Identifica PK y FK; anticipa que `jefe_id` enlaza empleados entre sí. |
-| 9 | 1 min | Muestra los dos casos deliberados para los JOIN: Paula sin departamento y Logística sin empleados. Pide predecir qué unión conservaría cada uno. |
-| 10 | 1 min | Introduce proyección, selección y asociación. Solicita identificar cuál operación representa cada fragmento mostrado. |
-| 11 | 1 min | Compara `SELECT *` con la proyección y explica el alias. No inventes una salida completa: la diapositiva indica que la fuente no la tabula. |
-| 12 | 2 min | Recorre el filtro de salario. Comprueba con las filas de la fuente qué cinco empleados superan 4.000.000 y cuáles no. |
-| 13 | 1 min | Usa el orden lógico FROM → WHERE → SELECT para explicar por qué el alias de SELECT no se resuelve en WHERE. |
-| 14 | 1 min | Revisa los operadores de igualdad y diferencia. Recalca que `NULL = NULL` no es verdadero; la prueba adecuada es `IS NULL`. |
-| 15 | 2 min | Cambia las pestañas AND, OR y NOT. Pide verbalizar qué condiciones deben cumplirse y por qué las expresiones con NULL pueden ser desconocidas. |
-| 16 | 2 min | Contrasta BETWEEN inclusivo, IN como lista y LIKE como patrón. Pide interpretar `%` y `_`; menciona ILIKE para ignorar mayúsculas. |
-| 17 | 2 min | Usa la alternancia para conectar aritmética, concatenación y lógica de NULL. Explica que `COUNT(*)` es una excepción al ignorar NULL, no una operación aritmética. |
-| 18 | 2 min | Distingue función por fila de agregado. Explica que PostgreSQL deja consultar una función sin FROM y por eso no requiere DUAL. Luego ilustra una función numérica del cuadro. |
+| 4 | 2 min | Explica ACID, MVCC y WAL con el diagrama editorial. Distingue consistencia y concurrencia de recuperación ante fallos. |
+| 5 | 2 min | Recorre clientes, postmaster, procesos hijo, memoria compartida, WAL y autovacuum de izquierda a derecha. Presenta el diagrama como arquitectura básica del documento. |
+| 6 | 1 min | Demuestra la secuencia de psql: conectarse, listar bases, cambiar, listar tablas, describir y salir. Aclara que pgAdmin es la alternativa gráfica mencionada. |
+| 7 | 1 min | Lee el esquema de `departamentos` y `empleados`; identifica PK, FK y la autorreferencia de `jefe_id`. El DDL completo queda desplegable. |
+| 8 | 2 min | Lee las filas de ejemplo e identifica los dos casos deliberados para los JOIN: Paula sin departamento y Logística sin empleados. |
+| 9 | 1 min | Enmarca la sección: SELECT/FROM/WHERE es la base, pero la portabilidad exige revisar diferencias de cada motor. Anticipa DUAL, división, concatenación, filtros de texto y NULL. |
+| 10 | 1 min | Compara `SELECT SQRT(16) FROM DUAL` en Oracle con `SELECT SQRT(16)` en PostgreSQL. Explica que PostgreSQL no necesita DUAL; despliega la opción de crear la vista solo si se quiere conservar esa sintaxis. |
+| 11 | 2 min | Pide predecir `7 / 2` y luego compara con `7 / 2.0` y `7::numeric / 2`. Relaciona la diferencia Oracle–PostgreSQL con los tipos de los operandos. |
+| 12 | 1 min | Conecta la comisión NULL de las filas de empleados con `salario + comision`. Explica por qué la suma queda NULL en esas filas; anticipa COALESCE, que se verá en funciones. |
+| 13 | 2 min | Alterna `||`, `CONCAT` y el contraste Oracle–PostgreSQL. Pide predecir qué pasa con NULL y destaca la diferencia de cantidad de argumentos indicada en la fuente. |
+| 14 | 2 min | Interpreta los operadores de comparación, BETWEEN inclusivo e IN. Luego explica los comodines `%` y `_`, y compara LIKE con ILIKE como opción de PostgreSQL para ignorar mayúsculas. |
+| 15 | 2 min | Explica TRUE, FALSE y UNKNOWN. Contrasta `= NULL` con `IS NULL` y comenta el problema de NOT IN cuando la lista contiene NULL; la fuente recomienda NOT EXISTS en subconsultas. |
+| 16 | 2 min | Lee las dos consultas con AND/OR. Pide explicar qué se agrupa en cada una; subraya que AND se evalúa antes que OR y que los paréntesis hacen explícita la intención. |
+| 17 | 2 min | Convierte la sección en una pausa de recuperación activa: pide responder las cuatro preguntas antes de abrir cada respuesta. Solicita justificar la opción con la regla vista, no solo memorizar el resultado. |
+| 18 | 2 min | Distingue función por fila de agregado. Presenta una función numérica del cuadro y conecta la idea con la siguiente sección de funciones. |
 | 19 | 2 min | Agrupa funciones de cadenas por intención: cambiar caja, recortar, extraer, reemplazar o codificar. En la pestaña siguiente compara POSITION/STRPOS y SOUNDEX. |
 | 20 | 3 min | Desarrolla el resumen de empleados: diferencia COUNT de columna y COUNT(*), y muestra qué agregados ignoran NULL. La fuente permite afirmar siete filas y dos comisiones no nulas. |
 | 21 | 3 min | Compara NVL, NVL2, COALESCE y NULLIF. Analiza cómo COALESCE evita que la suma con una comisión nula permanezca NULL. |
@@ -89,7 +90,7 @@ El tiempo incluye transiciones, pausas breves de participación y análisis oral
 | 59 | 3 min | Muestra pg_proc, pg_get_functiondef, information_schema y psql. Cierra con DROP FUNCTION y el requisito de tipos al existir sobrecarga. |
 | 60 | 1 min | Contrasta función y procedimiento por retorno, invocación y control transaccional. |
 | 61 | 1 min | Usa la tabla como mapa final de equivalencias. Menciona que el apéndice también compara tipos, errores y atributos de cursor. |
-| 62 | 9 min | Abre preguntas y respuestas; deja que el público proponga la respuesta antes de desplegarla. Elige preguntas de SQL, JOIN, subconsultas, restricciones, cursor y función/procedimiento. Conserva el tiempo restante para preguntas espontáneas. |
+| 62 | 8 min | Abre preguntas y respuestas; deja que el público proponga la respuesta antes de desplegarla. Elige preguntas de SQL, JOIN, subconsultas, restricciones, cursor y función/procedimiento. Conserva el tiempo restante para preguntas espontáneas. |
 
 ## Uso de la interactividad
 

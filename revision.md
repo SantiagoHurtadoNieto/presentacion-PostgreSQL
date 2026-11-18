@@ -13,8 +13,10 @@
 | Tema de la guía | Ubicación |
 |---|---:|
 | PostgreSQL, SGBD, sublenguajes, arquitectura y psql | 3–6 |
-| Esquema, filas, SELECT/FROM/WHERE y operadores | 7–17 |
-| NULL, concatenación, numéricas, cadenas y agregados | 15, 18–21 |
+| Esquema y filas de ejemplo | 7-8 |
+| Portabilidad Oracle–PostgreSQL y semántica de consultas | 9-17 |
+| Aritmética y concatenación con NULL, predicados y operadores | 12-16, 21 |
+| Funciones numéricas, de cadenas y agregados | 18-20 |
 | Fechas y funciones de fecha | 22–23 |
 | Conversiones y máscaras | 24–25 |
 | JOIN, GROUP BY, HAVING, subconsultas, CASE y recursión | 26–37 |
@@ -26,6 +28,10 @@
 | Procedimientos, equivalencias y preguntas de sustentación | 60–62 |
 
 ## Inconsistencias y precisiones observadas
+
+- A partir de la observación del usuario, las diapositivas 9-17 se reorganizaron para reemplazar el repaso general de SQL por una secuencia aplicada de diferencias Oracle–PostgreSQL y comportamientos propios de PostgreSQL. Se conserva la cuenta total de 62 diapositivas.
+- La secuencia retiene los conceptos de `SELECT/FROM/WHERE`, operadores de comparación, `BETWEEN`, `IN`, `LIKE`, `NULL` y precedencia `AND/OR`, pero ahora los explica con los ejemplos y matices del documento. El cierre propone un reto oral con respuestas desplegables.
+- La distribución del guion mantiene 120 minutos: el bloque 9-17 pasa a 15 minutos y el espacio final de preguntas pasa a 8 minutos.
 
 1. La fuente muestra resultados de `CURRENT_DATE` y `TO_CHAR(CURRENT_DATE, ...)` como `2026-11-14`/`14/11/2026`. Esos resultados ilustran la fecha asumida por el documento; en ejecución dependen de la fecha del servidor. La presentación los identifica como ejemplos citados, no como resultado actual.
 2. La fuente explica que `GREATEST` y `LEAST` ignoran NULL en PostgreSQL y se comportan distinto en Oracle; se conserva esa diferencia y se despliega junto con los ejemplos `DECODE`/`CASE` y `COLLECT`/`ARRAY_AGG`/`STRING_AGG`.
