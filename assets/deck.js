@@ -167,6 +167,46 @@ S.forEach(s => {
   s.source = "";
 });
 
+S[1].body = `<div class="route"><div><b>01</b><span>PostgreSQL y arquitectura</span></div><div><b>02</b><span>Administración de PostgreSQL</span></div><div><b>03</b><span>Modelo y consultas SQL</span></div><div><b>04</b><span>Datos y transacciones</span></div><div><b>05</b><span>PL/pgSQL y cursores</span></div><div><b>06</b><span>Funciones y repaso</span></div></div>`;
+
+S.splice(5, 0,
+  {
+    section: "Administración PostgreSQL",
+    title: "Memoria: áreas compartidas y de trabajo",
+    body: `<div class="cols"><div>${table(["Parámetro", "Para qué sirve"], [["shared_buffers", "Caché compartida de páginas de datos; se fija al iniciar el servidor."], ["work_mem", "Memoria por operación de ordenamiento o hash; varias operaciones y sesiones pueden usarla a la vez."], ["maintenance_work_mem", "Operaciones de mantenimiento como VACUUM y CREATE INDEX."], ["effective_cache_size", "Estimación para el planificador; no reserva memoria."]])}</div><div><h3>Lectura práctica</h3>${code("SHOW shared_buffers;\nSHOW work_mem;\nSHOW maintenance_work_mem;")}<p>La memoria total también depende de conexiones concurrentes, trabajadores y caché del sistema operativo. No se asigna toda la RAM a un único parámetro.</p></div></div><p class="callout">Un valor grande de <code>work_mem</code> se puede multiplicar por operaciones activas: se dimensiona según la carga, no solo por consulta.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Tablespaces distribuyen archivos, no memoria",
+    body: `<div class="sequence"><span>Tablespace<br><small>ubicación en disco</small></span><i>≠</i><span>Parámetros de memoria<br><small>memoria del servidor</small></span><i>→</i><span>Objetos<br><small>tablas e índices</small></span></div><div class="cols"><div><h3>Crear y usar</h3>${code("-- La ruta debe existir y pertenecer al usuario del servicio PostgreSQL\nCREATE TABLESPACE rapido\n  LOCATION '/ruta/pg_tablespaces/rapido';\n\nCREATE TABLE eventos (\n  id bigint,\n  creado_en timestamptz\n) TABLESPACE rapido;")}</div><div><h3>Qué resuelven</h3><ul><li>Ubicar objetos en volúmenes o discos distintos.</li><li>Separar almacenamiento según capacidad o rendimiento.</li><li>Los tablespaces predeterminados son <code>pg_default</code> y <code>pg_global</code>.</li></ul></div></div><p class="muted">Un tablespace forma parte del clúster: no es una copia de seguridad independiente. La ruta es un ejemplo y requiere preparación del sistema operativo.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Roles, esquemas y privilegios administran acceso",
+    body: `<div class="cols"><div><h3>Objetos principales</h3>${table(["Objeto", "Responsabilidad"], [["Rol", "Identidad, membresía, propiedad y privilegios; puede iniciar sesión."], ["Esquema", "Agrupa objetos y define un espacio de nombres."], ["GRANT / REVOKE", "Concede o retira privilegios sobre bases, esquemas y objetos."], ["Propietario", "Rol que controla el objeto; no equivale a un privilegio otorgado."]])}</div><div><h3>Ejemplo</h3>${code("CREATE ROLE consulta LOGIN;\nGRANT CONNECT ON DATABASE ventas TO consulta;\nGRANT USAGE ON SCHEMA public TO consulta;\nGRANT SELECT ON ALL TABLES IN SCHEMA public TO consulta;")}<p>Los roles se definen en el clúster; los objetos pertenecen a roles y los accesos se conceden explícitamente.</p></div></div><p class="callout">Evita usar superusuario para tareas de aplicación: concede solo los privilegios necesarios.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Límites de conexiones y consultas",
+    body: `<div class="cols"><div><h3>Controles de PostgreSQL</h3>${table(["Control", "Alcance"], [["max_connections", "Máximo global de conexiones simultáneas; consume recursos del servidor."], ["CONNECTION LIMIT", "Límite de conexiones para un rol."], ["statement_timeout", "Cancela una sentencia que supera el tiempo configurado."], ["temp_file_limit", "Limita el espacio de archivos temporales por proceso."]])}</div><div><h3>Configuración por rol</h3>${code("ALTER ROLE consulta CONNECTION LIMIT 5;\nALTER ROLE consulta SET statement_timeout = '30s';\nALTER ROLE consulta SET work_mem = '16MB';")}<p>Un pool de conexiones puede reducir la presión de muchas conexiones directas.</p></div></div><p class="callout">PostgreSQL ofrece parámetros y límites concretos, pero no un administrador integrado de cuotas rígidas de CPU por grupo. Para aislar CPU/memoria se complementa con el sistema operativo o la plataforma.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Vistas y vistas materializadas",
+    body: `<div class="comparison"><div><b>VIEW</b>${code("CREATE VIEW public.v_empleados AS\nSELECT id, nombre, departamento_id\nFROM public.empleados;")}<p>Guarda la consulta, no una copia del resultado. Se evalúa al consultarla y puede simplificar acceso o presentar una interfaz estable.</p></div><div><b>MATERIALIZED VIEW</b>${code("CREATE MATERIALIZED VIEW resumen_dept AS\nSELECT departamento_id, COUNT(*) AS cantidad\nFROM empleados\nGROUP BY departamento_id;\n\nREFRESH MATERIALIZED VIEW resumen_dept;")}<p>Almacena el resultado. No se actualiza automáticamente con cada cambio: se refresca explícitamente.</p></div></div><p class="muted">Los permisos sobre la vista se administran con GRANT; considera también el acceso a los datos subyacentes y las opciones de seguridad de la vista.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Sinónimos: PostgreSQL no tiene un objeto nativo",
+    body: `<div class="comparison"><div><b>No existe esta sintaxis</b>${code("-- PostgreSQL no implementa:\nCREATE SYNONYM emp FOR recursos.empleados;")}<p>No hay un objeto SYNONYM equivalente a los sinónimos de otros motores.</p></div><div><b>Alternativas PostgreSQL</b>${code("-- Referencia explícita\nSELECT * FROM recursos.empleados;\n\n-- Interfaz mediante una vista\nCREATE VIEW public.emp AS\nSELECT * FROM recursos.empleados;")}<p>También se puede configurar <code>search_path</code>, pero los nombres calificados hacen más claro qué esquema se consulta.</p></div></div><p class="callout">Una vista puede ofrecer una interfaz y permisos propios; no es un sinónimo: tiene una consulta y comportamiento de vista.</p>`
+  },
+  {
+    section: "Administración PostgreSQL",
+    title: "Catálogos y vistas del DBA en PostgreSQL",
+    body: `<div class="cols"><div>${table(["Necesidad", "Catálogo / vista"], [["Objetos y columnas", "pg_class · pg_attribute · pg_tables"], ["Bases y tablespaces", "pg_database · pg_tablespace"], ["Roles", "pg_roles"], ["Parámetros activos", "pg_settings"], ["Sesiones y actividad", "pg_stat_activity · pg_stat_database"]])}<p>No hay una familia nativa llamada <code>DBA_*</code>. La información se consulta en <code>pg_catalog</code>, vistas <code>pg_stat_*</code> e <code>information_schema</code>.</p></div><div><h3>Ejemplo de monitoreo</h3>${code("SELECT pid, usename, datname,\n       state, wait_event_type,\n       query_start\nFROM pg_stat_activity\nWHERE pid <> pg_backend_pid()\nORDER BY query_start;")}<p>La visibilidad de detalles de otras sesiones depende de los privilegios; los roles de monitoreo permiten acceso controlado.</p></div></div><p class="callout">Son catálogos y vistas del sistema —no todas son tablas— y permiten inspeccionar metadatos o actividad, no reemplazan las herramientas de respaldo y operación.</p>`
+  }
+);
+
 const root = document.getElementById("slides");
 S.forEach((s,i)=>{
   const sec=document.createElement("section");
