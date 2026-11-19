@@ -34,9 +34,9 @@ El bloque administrativo está ordenado desde los recursos físicos hacia la adm
 |---:|---:|---|
 | 1 | 1 min | Presenta la pregunta central: cómo pasamos de consultar filas a guardar lógica en la base. Explica que se mantendrá el mismo modelo de departamentos y empleados. |
 | 2 | 2 min | Explica el recorrido, marca que SQL, administración, JOIN, subconsultas y PL/pgSQL necesitan más conversación que una definición. Informa que usará las pestañas y el índice de navegación. |
-| 3 | 2 min | Define el SGBD como el software que define, almacena, consulta y protege datos. Pide al público asociar integridad, concurrencia y recuperación con necesidades concretas. |
+| 3 | 2 min | Define el SGBD como el software que define, almacena, consulta y protege datos. En “Almacena”, aclara que organiza la información en archivos y estructuras internas. Pide al público asociar integridad, concurrencia y recuperación con necesidades concretas. |
 | 4 | 2 min | Explica ACID, MVCC y WAL con el diagrama editorial. Distingue consistencia y concurrencia de recuperación ante fallos. |
-| 5 | 2 min | Recorre clientes, postmaster, procesos hijo, memoria compartida, WAL y autovacuum de izquierda a derecha. Presenta el diagrama como arquitectura básica. |
+| 5 | 2 min | Recorre el diagrama de clientes, postmaster, procesos hijo, memoria compartida, WAL y autovacuum. Luego compara visualmente conexiones, memoria y persistencia/mantenimiento con Oracle: Listener y servidores dedicados/compartidos; SGA + PGA; Redo Logs + UNDO. Aclara que estos mecanismos no son equivalentes directos. |
 | 6 | 2 min | Distingue memoria compartida (`shared_buffers`), memoria de trabajo por operación (`work_mem`), mantenimiento y estimación de caché. Advierte que el uso real depende de operaciones y sesiones concurrentes; `effective_cache_size` no reserva RAM. |
 | 7 | 2 min | Define tablespace como ubicación de archivos de objetos en disco, no como una partición de memoria. Explica la preparación de la ruta por el sistema operativo, `CREATE TABLESPACE` y la selección al crear una tabla. Recuerda que depende del clúster y no es una copia independiente. |
 | 8 | 1 min | Presenta roles, esquemas, propiedad y privilegios. Lee `GRANT` como concesión explícita y recomienda no usar superusuario para accesos de aplicación. |

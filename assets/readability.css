@@ -76,6 +76,27 @@ pre{font-size:22px;line-height:1.48;max-height:430px}
 .query-flow i{font-style:normal;color:var(--cyan);font-size:26px;font-weight:800}
 .query-relation{margin-top:12px;border-left:3px solid var(--pg);padding:8px 13px;font-size:17px;color:#40596b}
 
+.dual-architecture{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin:4px 0 0}
+.engine-diagram{padding:16px 18px 14px;background:#fff;border:1px solid #b9cbd5;border-top:6px solid var(--pg);box-shadow:0 4px 14px #132a3810}
+.engine-diagram h3{text-align:center;font-size:30px;margin:0 0 11px;color:var(--pg)}
+.oracle-diagram{border-top-color:#b45149}
+.oracle-diagram h3{color:#a84943}
+.diagram-flow{display:flex;flex-direction:column;align-items:stretch}
+.diagram-block{display:grid;place-items:center;min-height:54px;padding:8px 10px;border:1px solid #aebfc9;border-radius:4px;background:#f2f5f7;color:#243b4b;font-size:22px;font-weight:800;text-align:center}
+.connection-block{background:#3979a9;color:#fff;border-color:#3979a9}
+.oracle-diagram .connection-block{background:#b45149;border-color:#b45149}
+.memory-block{background:#dff3f7;border-color:#7fc8d6;color:#174e73}
+.persistence-block{background:#e8eef3;border-color:#94afbf;color:#174e73}
+.diagram-arrow{display:block;height:25px;color:var(--cyan);font:800 25px/25px Manrope,Arial,sans-serif;text-align:center}
+.diagram-processes{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.diagram-processes span{display:grid;place-items:center;min-height:45px;padding:6px 5px;background:#eef3f6;border:1px solid #bacbd4;border-radius:4px;color:#294758;font-size:16px;font-weight:800;line-height:1.1;text-align:center}
+.oracle-diagram .diagram-processes{grid-template-columns:1fr 1fr}
+.diagram-extra{margin-top:12px;padding:9px 12px;border-left:4px solid var(--cyan);background:#e8f7fa;color:#294758;font-size:19px;text-align:center}
+.oracle-diagram .diagram-extra{border-left-color:#d58b84;background:#fbefed}
+.diagram-extra b{color:var(--pg)}
+.oracle-diagram .diagram-extra b{color:#a84943}
+.architecture-disclaimer{margin:12px auto 0;padding:9px 14px;border:1px solid #c5d5dd;background:#eef5f7;color:#274555;font-size:18px;text-align:center}
+
 @media(max-width:1000px){
   .slide-inner h2{font-size:40px}
   .slide-body{font-size:22px}
@@ -115,6 +136,7 @@ pre{font-size:22px;line-height:1.48;max-height:430px}
   .psql-command-list code,.psql-command-list span{font-size:15px}
   .query-flow{grid-template-columns:1fr;gap:6px}
   .query-flow i{text-align:center;transform:rotate(90deg)}
+  .dual-architecture{grid-template-columns:1fr}
   .cover-logo{min-height:320px}
   .cover-logo img{width:min(330px,75vw)}
   .slide-shell:first-child h2{font-size:56px}
